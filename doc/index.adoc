@@ -1,0 +1,154 @@
+:plantuml-server-url: http://www.plantuml.com/plantuml
+
+= Cami System
+
+= Use Cases
+
+* Sign in
+* Add Subscriber
+* Delete Subscriber
+* Deposite
+* Fund
+
+[plantuml, usecase-diagram, algin="center"]
+
+....
+@startuml
+
+:Admin:
+:Subscriber:
+
+(Sign in)
+(Add Subscriber)
+(Delete Subscriber)
+(Deposit)
+(Fund)
+
+Admin -down-> (Sign in)
+Admin -down-> (Add Subscriber)
+Admin -down-> (Delete Subscriber)
+Admin -down-> (Deposit)
+Admin -down-> (Fund)
+Subscriber -down-> (Sign in)
+
+@enduml
+....
+
+== Add Subscriber
+
+\* An Admin can add subscriber
+
+\# addSubscriber(Subscriber)
+
+Class Diagram
+
+[plantuml, class-diagram, align="center"]
+
+....
+
+@startuml Add Subscriber
+
+class Raseed
+class RaseedDatabase
+class Subscriber
+class SubscriberWallet
+
+Raseed *-right> Subscriber
+Subscriber *-right> "1" SubscriberWallet
+Raseed -down-> RaseedDatabase
+
+@enduml
+....
+
+Sequence Diagram
+
+[plantuml, class-diagram, align="center"]
+
+....
+@startuml
+
+participant Raseed
+participant Subscriber
+participant SubscriberWallet
+participant RaseedDatabase
+
+create Subscriber
+Raseed -> Subscriber: create
+create SubscriberWallet
+Subscriber -> SubscriberWallet: create
+Raseed -> RaseedDatabase: addSubscriber(id, Subscriber)
+
+@enduml
+....
+
+== Deposit
+
+Class Diagram
+
+[plantuml, class-diagram, align="center"]
+
+....
+@startuml Deposit Class Diagram
+
+class Raseed
+class RaseedAccount
+
+Raseed -right-> RaseedAccount
+
+@enduml
+....
+
+Sequence Diagram
+
+[plantuml, sequence-diagram, align="center"]
+
+....
+@startuml Deposit Sequence Diagram
+
+participant Raseed
+participant RaseedDatabase
+participant Subscriber
+participant SubscriberWallet
+participant RaseedAccount
+
+Raseed -> Raseed: verifyAmount()
+Raseed -> RaseedDatabase: getSubscriber(id)
+Raseed -> RaseedDatabase: getRaseedAccount()
+Raseed -> Subscriber: deposit(amount)
+Subscriber -> SubscriberWallet: deposite(amount)
+Raseed -> RaseedAccount: deposit()
+
+@enduml
+....
+
+== Fund
+
+[plantuml, sequence-diagram, align="center"]
+
+....
+@startuml
+
+participant Raseed
+participant RaseedDatabase
+participant RaseedAccount
+participant Subscriber
+participant SubscriberWallet
+
+Raseed -> RaseedDatabase: getSubscriber(id)
+Raseed -> RaseedDatabase: getRaseedAccount
+Raseed -> RaseedAccount: getBalance
+Raseed -> Raseed: isFundAllowed
+Raseed -> Subscriber: fund(amount)
+Subscriber -> SubscriberWallet: fund(amount)
+
+@enduml
+....
+
+= Errors while programming
+
+* warning: 'Database' has virtual functions but non-virtual destructor.
+** Solved when I created a virtual distructor for Database (which is an interface)
+* non-const static data member must be initialized out of line
+** static members can not be initialized in-line
+* warning when including header files. https://forum.qt.io/topic/94282/qt-creator-the-code-model-could-not-parse-an-included-file
+** the solution is to disable ClangCodeModel plugin. in Qt, go to Help -> about plugins -> Disable the ClangCodeModel.
