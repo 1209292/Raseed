@@ -12,9 +12,12 @@ class Subscriber
    public:
       Subscriber(string firstName, string lastName);
       string getName();
+      int getBalance();
+      void deposit(int amount);
    private:
       string firstName;
       string lastName;
+      int balance;
       SubscriberWallet wallet;
 };
 

@@ -113,9 +113,9 @@ participant RaseedAccount
 
 Raseed -> Raseed: verifyAmount()
 Raseed -> RaseedDatabase: getSubscriber(id)
-Raseed -> RaseedDatabase: getRaseedAccount()
 Raseed -> Subscriber: deposit(amount)
 Subscriber -> SubscriberWallet: deposite(amount)
+Raseed -> RaseedDatabase: getRaseedAccount()
 Raseed -> RaseedAccount: deposit()
 
 @enduml
@@ -144,6 +144,10 @@ Subscriber -> SubscriberWallet: fund(amount)
 @enduml
 ....
 
+= Problems
+
+* listSubscribers() in main should not know what RaseedDatabase::getSubscribers() returns.
+
 = Errors while programming
 
 * warning: 'Database' has virtual functions but non-virtual destructor.
@@ -152,3 +156,11 @@ Subscriber -> SubscriberWallet: fund(amount)
 ** static members can not be initialized in-line
 * warning when including header files. https://forum.qt.io/topic/94282/qt-creator-the-code-model-could-not-parse-an-included-file
 ** the solution is to disable ClangCodeModel plugin. in Qt, go to Help -> about plugins -> Disable the ClangCodeModel.
+
+
+= Shortcuts
+
+* Locator Ctrl + K
+** type file name
+** type c class_name to look for class name
+** type m method_name to look for method name

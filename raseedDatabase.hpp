@@ -9,12 +9,13 @@
 class RaseedDatabase
 {  
    public:
-      static std::map<int, Subscriber*> subscribers;
+      static std::map<int, Subscriber> subscribers;
       static RaseedAccount* account;
       static Subscriber* getSubscriber(int id);
-      static void addSubscriber(int id, Subscriber* subscriber);
+      static void addSubscriber(int id, Subscriber subscriber);
       static RaseedAccount* getRaseedAccount();
       static void setRaseedAccount(RaseedAccount* account);
+      static map<int, Subscriber> getSubscribers();
 };
 
 #endif // RASEED_DATABASE_HPP
